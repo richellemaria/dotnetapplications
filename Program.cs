@@ -12,4 +12,4 @@ for (int i = 0; i < 5; i++)
 
 int a = 5;
 int b = 7;
-Console.WriteLine("Sum:", a + b);
+Console.WriteLine("Sum: {0}", a + b);
