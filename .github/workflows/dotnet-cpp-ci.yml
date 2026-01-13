@@ -18,5 +18,26 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
+      #  Install Snyk CLI
+      - name: Install Snyk CLI
+        uses: snyk/actions/setup@master
+
+      #  Authenticate Snyk
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      # Snyk Code (SAST)
+      - name: Snyk Code Scan
+        run: snyk code test --severity-threshold=medium
+
+      # Snyk Open Source + License Scan
+      - name: Snyk Open Source & License Scan
+        run: snyk test --all-projects --severity-threshold=medium
+
+      #  Upload results to Snyk Dashboard
+      - name: Upload results to Snyk Dashboard
+        run: snyk monitor --all-projects
+
+       # Optional: Run app (not required for Snyk)
       - name: Run app
         run: dotnet run
