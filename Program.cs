@@ -9,3 +9,7 @@ for (int i = 0; i < 5; i++)
 {
     Console.WriteLine($"Loop iteration: {i}");
 }
+
+int a = 5;
+int b = 7;
+Console::WriteLine("Sum: {0}", a + b);
