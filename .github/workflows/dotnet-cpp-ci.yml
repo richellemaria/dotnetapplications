@@ -50,6 +50,9 @@ jobs:
       - name: Snyk Security & License Scan
         run: snyk test --all-projects --severity-threshold=medium
 
+      - name: Snyk License Scan
+        run: snyk test --license
+
       - name: Upload results to Snyk Dashboard
         run: snyk monitor --all-projects
 
