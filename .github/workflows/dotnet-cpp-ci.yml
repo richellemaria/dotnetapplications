@@ -45,13 +45,10 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Snyk Code (SAST)
-        run: snyk code test --severity-threshold=medium
+        run: snyk code test 
 
       - name: Snyk Security & License Scan
-        run: snyk test --all-projects --severity-threshold=medium
-
-      - name: Snyk License Scan
-        run: snyk test --license
+        run: snyk test --all-projects 
 
       - name: Upload results to Snyk Dashboard
         run: snyk monitor --all-projects
