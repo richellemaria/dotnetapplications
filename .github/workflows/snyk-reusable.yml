@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Snyk Full Scan
-        uses: org/snyk-full-scan-action@v1
+        uses: actions/snyk-scan@v1
         with:
-          snyk-token: ${{ secrets.SNYK_TOKEN }}
           project-name: my-backend-service
           run-code-scan: "true"
           run-oss-scan: "true"
