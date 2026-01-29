@@ -12,7 +12,7 @@ jobs:
       - name: Run Snyk Full Scan
         uses: actions/snyk-scan@v1
         with:
-          project-name: my-backend-service
+          project-name: dotnetapplications
           run-code-scan: "true"
           run-oss-scan: "true"
           run-license-scan: "true"
