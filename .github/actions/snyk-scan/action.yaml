@@ -1,0 +1,96 @@
+name: "Snyk Full Scan"
+description: "Run Snyk Code, Snyk Security, and Snyk License scans and upload results to Snyk dashboard"
+author: "Platform Team"
+
+inputs:
+  snyk-token:
+    description: "Snyk API token"
+    required: true
+
+  project-name:
+    description: "Snyk project name"
+    required: true
+
+  working-directory:
+    description: "Directory to scan"
+    required: false
+    default: "."
+
+  run-code-scan:
+    description: "Run Snyk Code (SAST)"
+    required: false
+    default: "true"
+
+  run-oss-scan:
+    description: "Run Snyk Open Source (Security)"
+    required: false
+    default: "true"
+
+  run-license-scan:
+    description: "Run Snyk License scan"
+    required: false
+    default: "true"
+
+  severity-threshold:
+    description: "Fail build if issues >= this severity"
+    required: false
+    default: "high"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Snyk CLI
+      uses: snyk/actions/setup@v3
+
+    - name: Authenticate Snyk
+      shell: bash
+      run: snyk auth ${{ inputs.snyk-token }}
+
+    # -------------------------
+    # Snyk Code (SAST)
+    # -------------------------
+    - name: Snyk Code Scan
+      if: ${{ inputs.run-code-scan == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        snyk code test \
+          --severity-threshold=${{ inputs.severity-threshold }}
+
+    # -------------------------
+    # Snyk Open Source (Security)
+    # -------------------------
+    - name: Snyk Open Source Security Scan
+      if: ${{ inputs.run-oss-scan == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        snyk test \
+          --all-projects \
+          --severity-threshold=${{ inputs.severity-threshold }}
+
+    # -------------------------
+    # Snyk License Scan
+    # -------------------------
+    - name: Snyk License Scan
+      if: ${{ inputs.run-license-scan == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        snyk test \
+          --all-projects \
+          --license
+
+    # -------------------------
+    # Upload to Snyk Dashboard
+    # -------------------------
+    - name: Upload results to Snyk Dashboard
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        snyk monitor \
+          --all-projects \
+          --project-name=${{ inputs.project-name }}
