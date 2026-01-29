@@ -3,10 +3,6 @@ description: "Run Snyk Code, Snyk Security, and Snyk License scans and upload re
 author: "Platform Team"
 
 inputs:
-  snyk-token:
-    description: "Snyk API token"
-    required: true
-
   project-name:
     description: "Snyk project name"
     required: true
@@ -47,7 +43,12 @@ runs:
 
     - name: Authenticate Snyk
       shell: bash
-      run: snyk auth ${{ inputs.snyk-token }}
+      run: |
+        if [ -z "${{ secrets.SNYK_TOKEN }}" ]; then
+          echo "SNYK_TOKEN secret is not set"
+          exit 1
+        fi
+        snyk auth "${{ secrets.SNYK_TOKEN }}"
 
     # -------------------------
     # Snyk Code (SAST)
