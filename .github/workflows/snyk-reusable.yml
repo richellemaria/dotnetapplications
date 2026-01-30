@@ -19,6 +19,9 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release
+
+      - name: Restore .NET dependencies
+        run: dotnet restore
         
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
