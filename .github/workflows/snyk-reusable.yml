@@ -25,7 +25,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          project-name: dotnetapplications
+          project-name: dotnetapplications-snyk
+          working-directory: dotnetapplications
           run-code-scan: "true"
           run-oss-scan: "true"
           run-license-scan: "true"
