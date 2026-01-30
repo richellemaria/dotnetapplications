@@ -20,10 +20,14 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-     - name: Check for .NET project files
+     - name: Detect .NET projects
+       id: dotnet_check
        run: |
-            echo "PWD: $(pwd)"
-            find . -name "*.csproj" -o -name "*.sln"
+            if find . -name "*.csproj" -o -name "*.sln" | grep -q .; then
+              echo "found=true" >> $GITHUB_OUTPUT
+            else
+              echo "found=false" >> $GITHUB_OUTPUT
+            fi
         
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
