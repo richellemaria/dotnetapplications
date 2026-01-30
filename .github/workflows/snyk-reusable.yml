@@ -11,8 +11,11 @@ jobs:
     steps:
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           project-name: dotnetapplications
           run-code-scan: "true"
           run-oss-scan: "true"
           run-license-scan: "true"
+       
