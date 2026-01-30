@@ -1,21 +1,11 @@
 name: "Snyk Full Scan"
 description: "Run Snyk Code, Snyk Security, and Snyk License scans and upload results to Snyk dashboard"
-author: "Platform Team"
 
 inputs:
-  project-name:
-    description: "Snyk project name"
-    required: true
-
   working-directory:
     description: "Directory to scan"
     required: false
-    default: "."
-
-  csproj-path:
-    description: "csproj path"
-    required: false
-    default: "CppDotNetApp.csproj"
+    default: "."   
     
   run-code-scan:
     description: "Run Snyk Code (SAST)"
@@ -43,6 +33,9 @@ runs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: restore
+      run: dotnet restore
+
     - name: Setup Snyk CLI
       uses: snyk/actions/setup@master
 
@@ -57,13 +50,9 @@ runs:
       if: ${{ inputs.run-oss-scan == 'true' }}
       shell: bash
       # working-directory: ${{ inputs.working-directory }}
-      run: |
-        # dotnet restore 
-        snyk test --file=${{ inputs.csproj-path }} --severity-threshold=${{ inputs.severity-threshold }}
+      run: snyk test --all-projects --severity-threshold=${{ inputs.severity-threshold }}
 
     - name: Upload results to Snyk Dashboard
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-      run: |
-          dotnet restore
-          snyk monitor --all-projects 
+      run: snyk monitor --all-projects 
