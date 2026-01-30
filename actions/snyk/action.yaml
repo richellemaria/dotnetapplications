@@ -41,18 +41,6 @@ runs:
     - name: Setup Snyk CLI
       uses: snyk/actions/setup@master
 
-    # - name: Authenticate Snyk
-    #   shell: bash
-    #   run: |
-    #     if [ -z "${{ secrets.SNYK_TOKEN }}" ]; then
-    #       echo "SNYK_TOKEN secret is not set"
-    #       exit 1
-    #     fi
-    #     snyk auth "${{ secrets.SNYK_TOKEN }}"
-
-    # -------------------------
-    # Snyk Code (SAST)
-    # -------------------------
     - name: Snyk Code Scan
       if: ${{ inputs.run-code-scan == 'true' }}
       shell: bash
@@ -61,17 +49,14 @@ runs:
         snyk code test \
           --severity-threshold=${{ inputs.severity-threshold }}
 
-    # -------------------------
-    # Snyk Open Source (Security)
-    # -------------------------
-    - name: Snyk Open Source Security Scan
-      if: ${{ inputs.run-oss-scan == 'true' }}
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: |
-        snyk test \
-          --all-projects \
-          --severity-threshold=${{ inputs.severity-threshold }}
+    # - name: Snyk Open Source Security Scan
+    #   if: ${{ inputs.run-oss-scan == 'true' }}
+    #   shell: bash
+    #   working-directory: ${{ inputs.working-directory }}
+    #   run: |
+    #     snyk test \
+    #       --all-projects \
+    #       --severity-threshold=${{ inputs.severity-threshold }}
 
     # -------------------------
     # Snyk License Scan
