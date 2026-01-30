@@ -66,9 +66,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
-        snyk test \
-          --all-projects \
-          --license
+        snyk test --all-projects --license
 
     # -------------------------
     # Upload to Snyk Dashboard
