@@ -20,8 +20,10 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-      - name: Show current directory
-        run: pwd
+     - name: Check for .NET project files
+       run: |
+            echo "PWD: $(pwd)"
+            find . -name "*.csproj" -o -name "*.sln"
         
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
