@@ -20,9 +20,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-     - name: Detect .NET projects
-       id: dotnet_check
-       run: |
+      - name: Detect .NET projects
+        id: dotnet_check
+        run: |
             if find . -name "*.csproj" -o -name "*.sln" | grep -q .; then
               echo "found=true" >> $GITHUB_OUTPUT
             else
