@@ -39,7 +39,7 @@ runs:
       uses: actions/checkout@v4
 
     - name: Setup Snyk CLI
-      uses: snyk/actions/setup@v3
+      uses: snyk/actions/setup@master
 
     - name: Authenticate Snyk
       shell: bash
