@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Snyk Full Scan
-        uses: dotnetapplications/actions/snyk@main
+        uses: richellemaria/dotnetapplications/actions/snyk@main
         with:
           project-name: dotnetapplications
           run-code-scan: "true"
