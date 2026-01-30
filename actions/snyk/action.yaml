@@ -49,18 +49,15 @@ runs:
         snyk code test \
           --severity-threshold=${{ inputs.severity-threshold }}
 
-    # - name: Snyk Open Source Security Scan
-    #   if: ${{ inputs.run-oss-scan == 'true' }}
-    #   shell: bash
-    #   working-directory: ${{ inputs.working-directory }}
-    #   run: |
-    #     snyk test \
-    #       --all-projects \
-    #       --severity-threshold=${{ inputs.severity-threshold }}
+    - name: Snyk Open Source Security Scan
+      if: ${{ inputs.run-oss-scan == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        snyk test \
+          --all-projects \
+          --severity-threshold=${{ inputs.severity-threshold }}
 
-    # -------------------------
-    # Snyk License Scan
-    # -------------------------
     - name: Snyk License Scan
       if: ${{ inputs.run-license-scan == 'true' }}
       shell: bash
@@ -69,13 +66,9 @@ runs:
         dotnet restore 
         snyk test --all-projects --license
 
-    # -------------------------
-    # Upload to Snyk Dashboard
-    # -------------------------
     - name: Upload results to Snyk Dashboard
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
-        snyk monitor \
-          --all-projects \
-          --project-name=${{ inputs.project-name }}
+          dotnet restore
+          snyk monitor --all-projects --project-name=${{ inputs.project-name }}
