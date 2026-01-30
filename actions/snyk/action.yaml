@@ -12,6 +12,11 @@ inputs:
     required: false
     default: "."
 
+ csproj path:
+    description: "csproj path"
+    required: false
+    default: "CppDotNetApp.csproj"
+    
   run-code-scan:
     description: "Run Snyk Code (SAST)"
     required: false
@@ -48,23 +53,13 @@ runs:
       run: |
         snyk code test --severity-threshold=${{ inputs.severity-threshold }}
 
-    - name: Snyk Open Source Security Scan
+    - name: Snyk Open Source Security Scan and License Scan
       if: ${{ inputs.run-oss-scan == 'true' }}
       shell: bash
       # working-directory: ${{ inputs.working-directory }}
       run: |
-        # dotnet restore 
-        snyk test \
-          --all-projects \
-          --severity-threshold=${{ inputs.severity-threshold }}
-
-    - name: Snyk License Scan
-      if: ${{ inputs.run-license-scan == 'true' }}
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: |
         dotnet restore 
-        snyk test --all-projects --license
+        snyk test --file=${{ inputs.csproj path }} --severity-threshold=${{ inputs.severity-threshold }}
 
     - name: Upload results to Snyk Dashboard
       shell: bash
