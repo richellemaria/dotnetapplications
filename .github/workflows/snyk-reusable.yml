@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Restore dependencies
+        working-directory: dotnetapplications
         run: dotnet restore
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
