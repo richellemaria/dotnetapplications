@@ -54,6 +54,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
+        dotnet restore 
         snyk test \
           --all-projects \
           --severity-threshold=${{ inputs.severity-threshold }}
