@@ -11,17 +11,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Restore dependencies
-        run: dotnet restore 
-        
+  
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           project-name: dotnetapplications-snyk
-          csproj-path: dotnetapplications/CppDotNetApp.csproj
           run-code-scan: "true"
           run-oss-scan: "true"
           run-license-scan: "true"
