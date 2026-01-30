@@ -72,4 +72,4 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       run: |
           dotnet restore
-          snyk monitor --all-projects --project-name=${{ inputs.project-name }}
+          snyk monitor --all-projects 
