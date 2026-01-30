@@ -19,6 +19,9 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release
+
+      - name: Show current directory
+        run: pwd
         
       - name: Run Snyk Full Scan
         uses: richellemaria/dotnetapplications/actions/snyk@main
