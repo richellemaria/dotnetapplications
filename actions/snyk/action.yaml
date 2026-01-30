@@ -12,7 +12,7 @@ inputs:
     required: false
     default: "."
 
-  csproj path:
+  csproj-path:
     description: "csproj path"
     required: false
     default: "CppDotNetApp.csproj"
@@ -59,7 +59,7 @@ runs:
       # working-directory: ${{ inputs.working-directory }}
       run: |
         dotnet restore 
-        snyk test --file=${{ inputs.csproj path }} --severity-threshold=${{ inputs.severity-threshold }}
+        snyk test --file=${{ inputs.csproj-path }} --severity-threshold=${{ inputs.severity-threshold }}
 
     - name: Upload results to Snyk Dashboard
       shell: bash
